@@ -1,0 +1,8 @@
+spring:
+  application:
+    name: DepartmentService
+
+  mongodb:
+          uri: mongodb://localhost/department-db
+server:
+  port: 8082

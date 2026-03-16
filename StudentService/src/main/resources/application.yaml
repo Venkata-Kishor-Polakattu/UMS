@@ -1,0 +1,24 @@
+spring:
+  application:
+    name: StudentService
+
+  mongodb:
+    uri: mongodb://localhost/student-db
+
+  kafka:
+    bootstrap-servers: localhost:9092
+
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+student:
+  age: 18
+  Nationality: Indian
+
+services:
+  college:
+    url: http://localhost:8081
+  department:
+    url: http://localhost:8082
+server:
+  port: 8083
