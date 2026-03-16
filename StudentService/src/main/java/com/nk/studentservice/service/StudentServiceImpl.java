@@ -8,11 +8,12 @@ import com.nk.studentservice.client.CollegeClient;
 import com.nk.studentservice.filters.DeptYearFilter;
 import com.nk.studentservice.messaging.producer.StudentEventProducer;
 import com.nk.studentservice.repo.StudentRepository;
+import com.nk.studentservice.repo.StudentSearchRepository;
+import com.nk.studentservice.searchDocuments.StudentSearchDocument;
 import lombok.RequiredArgsConstructor;
 import org.bson.Document;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 
 @Service
@@ -21,6 +22,8 @@ public class StudentServiceImpl {
 
     @Value("${student.age}")
     private Integer minAge;
+
+    private final StudentSearchRepository searchRepository;
 
     private final StudentEventProducer studentEventProducer;
 
@@ -42,6 +45,15 @@ public class StudentServiceImpl {
 
         String msg=repository.createStudent(student);
 
+        StudentSearchDocument document=new StudentSearchDocument();
+        document.setId(student.getId());
+        document.setName(student.getName());
+        document.setAge(student.getAge());
+        document.setYear(student.getYear());
+        document.setCollegeName(student.getCollegeName());
+        document.setDepartmentName(student.getDepartmentName());
+
+        searchRepository.save(document);
 
 
         StudentCreatedEvent event=new StudentCreatedEvent();

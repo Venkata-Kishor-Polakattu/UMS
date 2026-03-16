@@ -3,6 +3,8 @@ package com.nk.studentservice.controller;
 import com.nk.studentservice.beans.Language;
 import com.nk.studentservice.beans.Student;
 import com.nk.studentservice.filters.DeptYearFilter;
+import com.nk.studentservice.repo.StudentSearchRepository;
+import com.nk.studentservice.searchDocuments.StudentSearchDocument;
 import com.nk.studentservice.service.StudentServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.bson.Document;
@@ -15,6 +17,17 @@ import java.util.List;
 @RequiredArgsConstructor
 public class StudentController {
     private final StudentServiceImpl service;
+    private final StudentSearchRepository searchRepository;
+
+    @GetMapping("/students/{name}")
+    public List<StudentSearchDocument> searchStudents(@PathVariable String name){
+        return searchRepository.findByName(name);
+    }
+
+    @GetMapping("/college/{college}")
+    public List<StudentSearchDocument> searchByCollege(@PathVariable String college){
+        return searchRepository.findByCollegeName(college);
+    }
 
     // Aggregations
 
