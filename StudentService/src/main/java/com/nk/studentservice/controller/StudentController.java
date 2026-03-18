@@ -4,6 +4,7 @@ import com.nk.studentservice.beans.Language;
 import com.nk.studentservice.beans.Student;
 import com.nk.studentservice.filters.DeptYearFilter;
 import com.nk.studentservice.repo.StudentSearchRepository;
+import com.nk.studentservice.repo.StudentSearchRepository2;
 import com.nk.studentservice.searchDocuments.StudentSearchDocument;
 import com.nk.studentservice.service.StudentServiceImpl;
 import lombok.RequiredArgsConstructor;
@@ -16,12 +17,15 @@ import java.util.List;
 @RequestMapping("/student")
 @RequiredArgsConstructor
 public class StudentController {
+
     private final StudentServiceImpl service;
     private final StudentSearchRepository searchRepository;
+    private final StudentSearchRepository2 elasticOperations;
 
     @GetMapping("/students/{name}")
     public List<StudentSearchDocument> searchStudents(@PathVariable String name){
-        return searchRepository.findByName(name);
+        //return searchRepository.findByName(name);
+        return elasticOperations.findByName(name);
     }
 
     @GetMapping("/college/{college}")
